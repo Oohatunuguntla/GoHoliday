@@ -1,3 +1,32 @@
+<?php
+
+$user=array("srd","satishkumar","manojkumar","saijahnavi","ooha","navyasai");
+$pwd=array("iiits@123","satish","manoj","jahnavi","ooha","navya");
+$count=0;
+$j=0;
+
+for ( $i=0 ; $i<6 ; $i++ )
+{
+	if(!empty($_POST["fname"]))
+	{
+		if( $user[$i] == $_POST["fname"])
+		{
+			$j++;
+			if( $pwd[$i] == $_POST["pw"])
+			{
+				$count=2;
+			}else{
+				$p="<span style='color:red'>Invalid username or password</span>";
+			}
+		}
+	}
+}
+
+if(!empty($_POST["fname"]) && $j==0) {
+	$p="<span style='color:red'>Invalid username or password</span>";
+}
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -41,7 +70,15 @@
     	  				</li>
         	    		<li><a href="#section41">CONTACT US</a></li>
     		        </ul>
-        			      			</div>
+        			<ul class="nav navbar-nav navbar-right">
+        				<?php if($count==2):?>
+      						<li style="color:white"><a><?php echo "Hello, ".$_POST["fname"]."!!"; ?></a></li>
+      						<li><a href="index.php"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+      			   		<?php else:?>
+      						<li><a href="#f3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      					<?php endif?>	
+    				</ul>
+      			</div>
     		</div>
   		</div>
 	</nav>    
@@ -83,8 +120,24 @@
 			<br><br>
 		</div>
 
+		<?php if($count!=2):?>
+		<div class="f">
+			<div class="login-page" id="f3">
+  				<div class="form" >	
+  	         	    <form class="login-form" style="color:black"   method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?> " >
+  			  	 		<center><h2 style="color:black">Log In </h2></center><br>
+      					<?php echo $p; ?>
+      					<input type="text" placeholder="username" name="fname">
+      					<input type="password" placeholder="password" name="pw">
+      					<button>login</button>
+    				</form>
+  				</div>
+			</div>
+		</div>
+ 		
+		
     
-
+    	<?php else:?>
     	<div style="background-color:transparent;height:100px"></div>
 <center>
 <div style="background-color:rgba(120,120,120,0.4);width:70%"><br><br>
@@ -114,7 +167,7 @@
 <div style="background-color:transparent;height:100px"></div>
 </center>
 <script src="js/display.js"></script>
-  
+		<?php endif?>	  
 
 
 		<div id="section41" class="container-fluid">
